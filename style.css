@@ -131,13 +131,18 @@ a:not([class]) {
   color: var(--grey-light);
   text-decoration: underline .15em;
   text-underline-offset: var(--offset, 0.1em);
-  transition: --offset 300ms, text-decoration-color 300ms, color 300ms;
+  transition: --offset 300ms, text-decoration-color 300ms, color 300ms, box-shadow 300ms;
+  padding: .1em;
 }
 
-a:not([class]):hover, a:not([class]):focus {
+a:not([class]):hover {
   --offset: .4em;
   text-decoration-color: var(--link-blue);
   color: var(--link-blue);
+}
+
+a:not([class]):focus {
+  box-shadow: 0 0 0 .2em var(--link-blue);
 }
 
 @supports not (background:paint(something)) {
