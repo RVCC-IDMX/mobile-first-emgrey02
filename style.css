@@ -103,33 +103,55 @@ h4 {
 }
 
 p {
-  max-width: 60ch;
   padding-block: var(--space-3xs);
 }
 
-a {
+/* button styles */
+
+a[class] {
+  background-color: var(--purple-dark);
+  padding: 0.5em 1em;
+  box-shadow: 0 0 0 1px rgb(0,0,0);
+  width: fit-content;
+  transition: background-color 300ms, box-shadow 300ms, transform 300ms ease, color 300ms;
+}
+
+a[class]:hover {
+  background-color: var(--green-light);
+  color: var(--grey-dark);
+}
+
+a[class]:focus {
+  box-shadow: 0 0 0 5px rgb(0,0,0);
+}
+
+/* link styles */
+
+a:not([class]) {
   color: var(--grey-light);
   text-decoration: underline .15em;
   text-underline-offset: var(--offset, 0.1em);
   transition: --offset 300ms, text-decoration-color 300ms, color 300ms;
 }
 
-a:hover, a:focus {
+a:not([class]):hover, a:not([class]):focus {
   --offset: .4em;
   text-decoration-color: var(--link-blue);
   color: var(--link-blue);
 }
 
 @supports not (background:paint(something)) {
-  a {
+  a:not([class]) {
     transition: text-underline-offset 300ms, text-decoration-color 300ms;
   }
 
-  a:hover,
-  a:focus {
+  a:not([class]):hover,
+  a:not([class]):focus {
     text-underline-offset: 0.4em;
   }
 }
+
+/* skip to main content link */
 
 .skip-link {
   width: fit-content;
@@ -137,14 +159,87 @@ a:hover, a:focus {
   inset-inline-start: 0;
   inset-block-start: 0;
   transform: translateY(-100%);
-  transition: transform 500ms ease;  
 }
 
 .skip-link:focus {
   transform: translateY(0%);
 }
 
-.container {
+/* define layouts */
+
+section.container,
+div.container {
   display: grid;
   grid-gap: var(--space-xs);
+  padding-block: var(--space-m);
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+div.container {
+  max-width: fit-content;
+}
+
+/* list styles */
+
+ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+ul > * {
+  margin: .5em 0;
+}
+
+:where(ul, ol) {
+  list-style-position: inside;
+}
+
+ol,
+ul {
+  max-width: fit-content;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+ol > * + * {
+  padding-block-start: var(--space-2xs);
+}
+
+/* nav styles */
+
+nav {
+  width: 100%;
+  margin-block: var(--space-2xl);
+}
+
+nav > ul {
+  margin-inline: auto;
+}
+
+/* print styles */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 12px;
+  }
+
+  a::after {
+    content: " (" attr(href) ") ";
+  }
+
+  a[class] {
+    color: black;
+    background: white;
+  }
+
+  nav, footer, aside {
+    display: none;
+  }
 }
